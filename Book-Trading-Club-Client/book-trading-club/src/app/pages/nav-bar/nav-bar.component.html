@@ -1,0 +1,41 @@
+<nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 20px;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand">bookjump</a>
+    </div>
+
+  <div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a routerLink="/" class="nav-link">Home</a>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li *ngIf="loadUsername()!==undefined" class="nav-item">
+        <a class="nav-link">{{loadUsername()}}</a>
+      </li>
+      <li *ngIf="!isLoggedIn()" class="nav-item">
+        <a routerLink="/signup" routerLinkActive="active" class="nav-link">Sign up</a>
+      </li>
+      <li class="nav-item" *ngIf="!isLoggedIn()">
+        <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn()">
+        <a routerLink="/allbooks" routerLinkActive="active" class="nav-link">All books</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn()">
+        <a routerLink="/mybooks" routerLinkActive="active" class="nav-link">My books</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn()">
+        <a routerLink="/settings" routerLinkActive="active" class="nav-link">
+          <i class="fa fa-cog"></i>
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn()">
+        <a (click)="logout()" class="nav-link fa fa-power-off"></a>
+      </li>
+    </ul>
+  </div>
+  </div>
+</nav>

@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="page-header">
+    <div class="btn-group btn-group-centered">
+      <button type="button" class="btn btn-success" (click)="onClickOutstanding()">
+        Your trade requests ({{outstandingTradeRequests?.length || 0}} outstanding)
+      </button>
+      <button type="button" class="btn btn-primary" (click)="onClickUnapproved()">
+        Trade requests for you ({{unapprovedTradeRequests?.length || 0}} unapproved)
+      </button>
+    </div>
+    <div *ngIf="showOutstandingTradeRequests && !showUnapprovedTradeRequests && outstandingTradeRequests.length > 0">
+      <h2>Your outstanding requests:</h2>
+        <div class="row">
+          <div class="col-lg-5">
+            <ul class="list-group w-50">
+              <li *ngFor="let outstandingTradeRequest of outstandingTradeRequests" class="list-group-item">
+                Proposed: {{outstandingTradeRequest.bookSampleProposed}},
+                requested: {{outstandingTradeRequest.bookSampleRequested}}
+                <button class="btn btn-xs btn-secondary pull-right" (click)="declineTradeRequest(outstandingTraingequest)">Take back</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+
+    <div *ngIf="showUnapprovedTradeRequests && !showOutstandingTradeRequests && unapprovedTradeRequests.length > 0">
+      <h2>Requests from other users:</h2>
+      <div class="row">
+        <div class="col-lg-5">
+          <ul class="list-group">
+            <li class="list-group-item text-truncate" *ngFor="let unapprovedTradeRequest of unapprovedTradeRequests">
+              Proposed: {{unapprovedTradeRequest.bookSampleProposed}},
+              requested: {{unapprovedTradeRequest.bookSampleRequested}}
+              <button class="btn btn-xs btn-secondary pull-right" (click)="declineTradeRequest(unapprovedTradeRequest)">Decline</button>
+              <button class="btn btn-xs btn-success pull-right" (click)="acceptTradeRequest(unapprovedTradeRequest)">Accept</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h1>My books:</h1>
+    <div class="input-group" style="width: 40%;">
+      <input type="text" class="form-control" placeholder="Search new books">
+      <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button" (click)="searchNewBooks()">Add</button>
+        </span>
+    </div>
+  </div>
+
+  <div *ngIf="!userBooks" class="text-center">
+    <h4>Loading my books...</h4>
+  </div>
+  <div *ngIf="this.tradeRequestService.tradeRequestInitialized" class="text-center">
+    <h4>You have uncomplete trade request, go to AllBooks and choose a book you want to trade with, or take back the trade.</h4>
+  </div>
+  <div *ngIf="userBooks" class="card-group">
+    <div *ngFor="let userBook of userBooks | async">
+      <div class="card col-sm-6 col-md-4">
+        <!--<img src="..." alt="No thumbnail available" class="card-img-top">-->
+        <div class="card-body">
+          <div class="card-title">
+            <h3>{{userBook.bookTitle}}</h3>
+          </div>
+          <div class="card-text">
+            <small>{{userBook.author}}</small>
+            <p> {{userBook.userDescription}}</p>
+            <i>Posted on {{userBook.datePostedOn}} by {{userBook.ownerUsername}}</i>
+            <button *ngIf="!this.tradeRequestService.tradeRequestInitialized" class="btn btn-micro btn-light" (click)="initTradeRequest(userBook.sampleID)">Trade this book!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

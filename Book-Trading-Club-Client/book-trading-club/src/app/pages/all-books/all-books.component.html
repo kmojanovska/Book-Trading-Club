@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="page-header">
+    <h1>All books:</h1>
+  </div>
+
+  <div *ngIf="!bookSamples" class="text-center">
+    <h4>Loading books...</h4>
+  </div>
+
+  <div *ngIf="this.tradeRequestCreated" class="text-center">
+    <h4>The trade request has been made, you should wait for the requested book's owner to accept!</h4>
+  </div>
+
+  <div *ngIf="bookSamples">
+    <div *ngFor="let bookSample of bookSamples | async">
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbmail">
+          <!--<img src="..." alt="No thumbnail available" class="img-thumbnail">-->
+          <div class="caption">
+            <h3>{{bookSample.bookTitle}}</h3>
+            <small>{{bookSample.author}}</small>
+            <p> {{bookSample.userDescription}}</p>
+            <i>Posted on {{bookSample.datePostedOn}} by {{bookSample.user.username}}</i>
+            <button *ngIf="this.tradeRequestService.tradeRequestInitialized" class="btn btn-micro btn-light" (click)="createTradeRequest(bookSample.sampleID)">Trade with this book!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

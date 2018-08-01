@@ -1,0 +1,53 @@
+<div routerLink="/signup">
+  <div class="container">
+    <h1>Sign up</h1>
+    <h5>Please fill out this form to create an account</h5>
+    <form [formGroup]="signUpForm" (ngSubmit)="signUp()" class="form">
+      <div class="form-group">
+        <label for="userEmail">Email</label>
+        <input type="email" name="email" id="userEmail" class="form-control" formControlName="email" [(ngModel)]="email">
+        <div *ngIf="emailGetter.invalid && (emailGetter.dirty || emailGetter.touched)" class="alert alert-danger">
+          <div *ngIf="emailGetter.errors['email']">
+            Invalid email address.
+          </div>
+        </div>
+
+        <label for="userName">Username</label>
+        <input type="username" name="username" id="userName" class="form-control" formControlName="username" [(ngModel)]="username">
+        <div *ngIf="usernameGetter.invalid && (usernameGetter.dirty || usernameGetter.touched)" class="alert alert-danger">
+          <div *ngIf="usernameGetter.errors['minlength']">
+            Name must be at least 6 characters long.
+          </div>
+          <div *ngIf="usernameGetter.errors['required']">
+            Name is required.
+          </div>
+        </div>
+
+        <label for="userFullName">Full name</label>
+        <input type="name" id="userFullName" class="form-control" [(ngModel)]="fullName" formControlName="fullName">
+
+        <label for="userCity">City</label>
+        <input type="name" id="userCity" class="form-control" [(ngModel)]="city" formControlName="city">
+
+        <label for="userState">State</label>
+        <input type="name" id="userState" class="form-control" [(ngModel)]="state" formControlName="state">
+
+        <label for="userPassword">Password</label>
+        <input type="password" name="password" id="userPassword" class="form-control" formControlName="password" [(ngModel)]="password">
+        <div *ngIf="passwordGetter.invalid && (passwordGetter.dirty || passwordGetter.touched)" class="alert alert-danger">
+          <div *ngIf="passwordGetter.errors['pattern']">
+            <small>
+              Password should be minimum eight characters, at least one upper-, one lower-case letter, one digit, one special character.
+            </small>
+          </div>
+          <div *ngIf="passwordGetter.errors['required']">
+            Password is required.
+          </div>
+        </div>
+
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!signUpForm.valid">Sign up</button>
+      <button class="btn btn-secondary" routerLink="/login">Login</button>
+    </form>
+  </div>
+</div>
